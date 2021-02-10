@@ -14,9 +14,11 @@ export class FetchingExample extends React.Component {
 		super();
 		this.state = {
 			songs: [],
-			songSelected: null
+			songSelected: null,
+			position: null
 		};
 		this.audioRef = React.createRef();
+		this.cambiarcancion = this.cambiarcancion.bind(this);
 	}
 	componentDidMount() {
 		fetch("https://assets.breatheco.de/apis/sound/songs")
@@ -27,12 +29,33 @@ export class FetchingExample extends React.Component {
 			});
 		// console.log(this.fetchData);
 	}
-	cambiarcancion(song) {
-		this.setState({ songSelected: song });
-		console.log(this.audioRef);
+	cambiarcancion(song, index) {
+		this.setState({ songSelected: song, position: index });
+
+		// this.setState({ position: index });
+		console.log(song, index);
 		this.audioRef.current.src =
 			"https://assets.breatheco.de/apis/sound/" + song.url;
+		console.log(this.state.songSelected, this.state.position);
 	}
+	// adelante(song) {
+	// 	this.setState({ songFoward: song });
+	// 	this.audioRef.current.src =
+	// 		"https://assets.breatheco.de/apis/sound/" + song.url;
+	// }
+	// play = i => {
+	// 	var url = this.state.songs[i].url;
+	// 	const songUrl = "https://assets.breatheco.de/apis/sound/" + url;
+	// 	this.audio.src = songUrl;
+	// 	this.audio.play();
+	// 	this.setState({ currentIndex: i });
+	// };
+
+	// atras(song) {
+	// 	this.setState({ songBefore: song });
+	// 	this.audioRef.current.src =
+	// 		"https://assets.breatheco.de/apis/sound/" + song.url;
+	// }
 	render() {
 		return (
 			<div className="image-box">
@@ -44,14 +67,48 @@ export class FetchingExample extends React.Component {
 								className="btn btn-secondary btn-lg btn-block  "
 								key={i}
 								onClick={() => {
-									this.cambiarcancion(song);
+									this.cambiarcancion(song, i);
 								}}>
 								{" "}
 								{i} {song.name}{" "}
 							</button>
 						);
 					})}
-					<audio controls ref={this.audioRef}></audio>
+					<audio
+						controls
+						autoPlay
+						ref={this.audioRef}
+						className="audio"
+						id="player"></audio>
+					<div className="center">
+						<button
+							className="fas fa-caret-left"
+							onClick={() => {
+								if (this.state.position - 1 >= 0) {
+									this.cambiarcancion(
+										this.state.songs[
+											this.state.position - 1
+										],
+										this.state.position - 1 // Faltaba el - 1 para pasarle la position nueva
+									);
+								}
+							}}></button>
+						<button
+							className="fas fa-caret-right"
+							onClick={() => {
+								if (
+									this.state.position + 1 <
+									this.state.songs.length
+								) {
+									this.cambiarcancion(
+										this.state.songs[
+											this.state.position + 1
+										],
+										this.state.position + 1 // Faltaba el + 1 para pasarle la position nueva
+									);
+								}
+							}}></button>
+					</div>
 				</div>
 			</div>
 			// <div>

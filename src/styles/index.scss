@@ -2,6 +2,13 @@
 body {background-color: black;}
 .image-box {color: white;}
 .alinear {margin-left: 0%;}
+.audio {
+  width: 600px; 
+  box-shadow: 5px 5px 20px rgba(0,0, 0, 0.4);
+  border-radius: 90px;
+  transform: scale(1.05);}
+.center {margin-left: 40%;}
+.fas.fa-caret-left {margin-right: 70%;}
 /* 
 
     You can write your own styles here...
