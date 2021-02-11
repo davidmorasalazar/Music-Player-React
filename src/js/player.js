@@ -25,7 +25,6 @@ export class FetchingExample extends React.Component {
 			.then(response => response.json())
 			.then(data => {
 				this.setState({ songs: data });
-				console.log(this.state.songs);
 			});
 		// console.log(this.fetchData);
 	}
@@ -33,10 +32,8 @@ export class FetchingExample extends React.Component {
 		this.setState({ songSelected: song, position: index });
 
 		// this.setState({ position: index });
-		console.log(song, index);
 		this.audioRef.current.src =
 			"https://assets.breatheco.de/apis/sound/" + song.url;
-		console.log(this.state.songSelected, this.state.position);
 	}
 	// adelante(song) {
 	// 	this.setState({ songFoward: song });
